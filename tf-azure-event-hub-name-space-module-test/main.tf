@@ -4,7 +4,7 @@ module "eventhubnamespace" {
   resource_group_name             = var.eventhubnamespace.resource_group_name
   location                        = var.eventhubnamespace.location
   sku                             = var.eventhubnamespace.sku
-  azurerm_eventhub_namespace_name = var.eventhubnamespace.azurerm_eventhub_namespace_name
+  name                            = var.eventhubnamespace.azurerm_eventhub_namespace_name
   capacity                        = var.eventhubnamespace.capacity
   auto_inflate_enabled            = var.eventhubnamespace.auto_inflate_enabled
   maximum_throughput_units        = var.eventhubnamespace.maximum_throughput_units
