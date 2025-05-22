@@ -30,6 +30,11 @@ variable "zone_redundant" {
 }
 
 variable "tags" {
+  type = map(string)
+}
+
+variable "public_network_access_enabled" {
+  default = false
 }
 
 variable "sku" {
