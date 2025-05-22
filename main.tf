@@ -29,3 +29,36 @@ resource "azurerm_eventhub_namespace" "eventhubnamespace" {
     ]
   }
 }
+
+
+################ (Optional) Private Endpoints ###################
+
+locals {
+  private_endpoint_prefix = replace(var.azurerm_eventhub_namespace_name, "sa\\d+", "")
+}
+
+module "globals" {
+  source = "git@gitlab.chq.ei:dc-cloudinfra/tf-azure-globals.git?ref=v.01.28.25"
+}
+
+module "registry_private_endpoint" {
+  source          = "git@gitlab.chq.ei:dc-cloudinfra/tf-azure-private-endpoint.git?ref=v.02.04.25"
+  count           = var.private_endpoints["subnet_id"] == null ? 0 : 1
+  target_resource = azurerm_container_registry.acr.id
+  location        = var.location
+  private_endpoints = {
+    registry = {
+      name                      = "${local.private_endpoint_prefix}-pe01"
+      subnet_id                 = var.private_endpoints.subnet_id
+      networking_resource_group = var.private_endpoints.networking_resource_group
+      group_ids                 = ["registry"]
+      approval_required         = false
+    }
+  }
+  private_dns = {
+    registry = {
+      name                 = "privatelink.azurecr.io"
+      private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.azurecr.io"
+    }
+  }
+}

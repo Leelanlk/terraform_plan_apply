@@ -11,6 +11,7 @@ output "identity_principal_id" {
 output "default_primary_connection_string" {
   description = "The primary connection string for Event Hub namespace"
   value       = azurerm_eventhub_namespace.eventhubnamespace.default_primary_connection_string
+  sensitive = true
 }
 
 output "id" {

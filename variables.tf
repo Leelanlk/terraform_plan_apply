@@ -41,3 +41,17 @@ variable "sku" {
   description = "Defines which tier to use. Valid options are Basic, Standard, and Premium. Please not that setting this field to Premium will force the creation of a new resource and also requires setting zone_redundant to true."
   default     = "Standard"
 }
+
+#private endpoint variables
+
+variable "private_endpoints" {
+  default = {
+    networking_resource_group = null
+    subnet_id                 = null
+  }
+  type = object({
+    networking_resource_group = string
+    subnet_id                 = string
+  })
+
+}
