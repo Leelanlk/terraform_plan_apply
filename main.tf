@@ -8,16 +8,16 @@ terraform {
 }
 
 resource "azurerm_eventhub_namespace" "eventhubnamespace" {
-  name                     = var.azurerm_eventhub_namespace_name
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
-  sku                      = var.sku
-  capacity                 = var.capacity
-  auto_inflate_enabled     = var.auto_inflate_enabled
-  maximum_throughput_units = var.maximum_throughput_units
-  public_network_access_enabled = var.public_network_access_enabled  #added this
+  name                          = var.azurerm_eventhub_namespace_name
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  sku                           = var.sku
+  capacity                      = var.capacity
+  auto_inflate_enabled          = var.auto_inflate_enabled
+  maximum_throughput_units      = var.maximum_throughput_units
+  public_network_access_enabled = var.public_network_access_enabled #added this
   #zone_redundant           = var.zone_redundant
-  tags                     = var.tags
+  tags = var.tags
 
   identity {
     type = "SystemAssigned" # It is the only available for now

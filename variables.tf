@@ -24,10 +24,11 @@ variable "maximum_throughput_units" {
   default     = "4"
 }
 
-variable "zone_redundant" {
+#no zone_redundant variable reference in terraform for this module
+/*variable "zone_redundant" {
   description = "Specifies if the EventHub Namespace should be Zone Redundant (created across Availability Zones). Changing this forces a new resource to be created."
   default     = "false"
-}
+}*/
 
 variable "tags" {
   type = map(string)
