@@ -47,7 +47,7 @@ module "registry_private_endpoint" {
   target_resource = azurerm_eventhub_namespace.eventhubnamespace.id
   location        = var.location
   private_endpoints = {
-    registry = {
+    namespace = {
       name                      = "${local.private_endpoint_prefix}-pe01"
       subnet_id                 = var.private_endpoints.subnet_id
       networking_resource_group = var.private_endpoints.networking_resource_group
