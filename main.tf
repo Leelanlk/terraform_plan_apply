@@ -44,7 +44,7 @@ module "globals" {
 module "registry_private_endpoint" {
   source          = "git@gitlab.chq.ei:dc-cloudinfra/tf-azure-private-endpoint.git?ref=v.02.04.25"
   count           = var.private_endpoints["subnet_id"] == null ? 0 : 1
-  target_resource = azurerm_container_registry.acr.id
+  target_resource = azurerm_eventhub_namespace.eventhubnamespace.id
   location        = var.location
   private_endpoints = {
     registry = {
@@ -57,8 +57,8 @@ module "registry_private_endpoint" {
   }
   private_dns = {
     registry = {
-      name                 = "privatelink.azurecr.io"
-      private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.azurecr.io"
+      name                 = "privatelink.servicebus.windows.net"
+      private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.servicebus.windows.net"
     }
   }
 }
