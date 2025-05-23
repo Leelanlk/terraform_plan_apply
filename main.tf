@@ -51,12 +51,12 @@ module "registry_private_endpoint" {
       name                      = "${local.private_endpoint_prefix}-pe01"
       subnet_id                 = var.private_endpoints.subnet_id
       networking_resource_group = var.private_endpoints.networking_resource_group
-      group_ids                 = ["registry"]
+      group_ids                 = ["namespace"]
       approval_required         = false
     }
   }
   private_dns = {
-    registry = {
+    namespace = {
       name                 = "privatelink.servicebus.windows.net"
       private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.servicebus.windows.net"
     }
