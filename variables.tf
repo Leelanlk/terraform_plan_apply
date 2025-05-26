@@ -24,15 +24,35 @@ variable "maximum_throughput_units" {
   default     = "4"
 }
 
-variable "zone_redundant" {
+#no zone_redundant variable reference in terraform for this module
+/*variable "zone_redundant" {
   description = "Specifies if the EventHub Namespace should be Zone Redundant (created across Availability Zones). Changing this forces a new resource to be created."
   default     = "false"
-}
+}*/
 
 variable "tags" {
+  type = map(string)
+}
+
+variable "public_network_access_enabled" {
+  default = false
 }
 
 variable "sku" {
   description = "Defines which tier to use. Valid options are Basic, Standard, and Premium. Please not that setting this field to Premium will force the creation of a new resource and also requires setting zone_redundant to true."
   default     = "Standard"
+}
+
+#private endpoint variables
+
+variable "private_endpoints" {
+  default = {
+    networking_resource_group = null
+    subnet_id                 = null
+  }
+  type = object({
+    networking_resource_group = string
+    subnet_id                 = string
+  })
+
 }
