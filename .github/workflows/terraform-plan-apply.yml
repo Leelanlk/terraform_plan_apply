@@ -23,7 +23,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@e56ee743278d32b50d189ca3e277ce89070f6309
@@ -44,7 +44,7 @@ jobs:
             -out="${GITHUB_WORKSPACE}/terraform_planfile"
 
       - name: Upload Plan Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@60a1d31e97bb2217580537303f8491af005f8547
         with:
           name: terraform-plan
           path: terraform_planfile
@@ -61,7 +61,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@e56ee743278d32b50d189ca3e277ce89070f6309
@@ -70,7 +70,7 @@ jobs:
         run: terraform init
 
       - name: Download Plan Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           name: terraform-plan
 
