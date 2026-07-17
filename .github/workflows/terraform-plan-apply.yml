@@ -74,6 +74,7 @@ jobs:
         with:
           name: terraform-plan
 
+          path: .
       - name: Terraform Apply
         run: |
-          terraform apply -input=false terraform_planfile
+          terraform apply -input=false -auto-approve terraform_planfile
