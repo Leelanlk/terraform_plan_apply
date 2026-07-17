@@ -1,0 +1,79 @@
+name: Terraform plan and apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      tfvar_file:
+        description: "The name of the tfvars file to use (without .tfvars extension)"
+        required: true
+        type: string
+
+permissions: 
+  contents: read
+
+jobs:
+  #Stage 1: Terraform Plan
+  Terraform-plan:
+    name: Plan with Terraform
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@e56ee743278d32b50d189ca3e277ce89070f6309
+
+      - name: Show Terraform Version
+        run: terraform --version
+
+      - name: Terraform Init
+        run: terraform init
+        
+      - name: Terraform Validate
+        run: terraform validate
+        
+      - name: Terraform Plan
+        run: |
+          terraform plan \
+            -var-file="${GITHUB_WORKSPACE}/variables/${{ inputs.tfvar_file }}.tfvars" \
+            -out="${GITHUB_WORKSPACE}/terraform_planfile"
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: terraform_planfile
+
+  #Stage 2: Terraform Apply
+  Terraform-apply:
+    name: Apply with Terraform
+    runs-on: ubuntu-latest
+    needs: Terraform-plan
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@e56ee743278d32b50d189ca3e277ce89070f6309
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-plan
+
+      - name: Terraform Apply
+        run: |
+          terraform apply -input=false terraform_planfile
