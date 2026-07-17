@@ -9,5 +9,5 @@ auto_inflate_enabled            = true
 maximum_throughput_units        = 7
 public_network_access_enabled   = false
 tags = {
-  "costcenter" = "G15"
+  "costcenter" = "leela"
 }
