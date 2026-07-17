@@ -33,7 +33,7 @@ resource "azurerm_eventhub_namespace" "eventhubnamespace" {
 
 ################ (Optional) Private Endpoints ###################
 
-locals {
+/*locals {
   private_endpoint_prefix = replace(var.azurerm_eventhub_namespace_name, "sa\\d+", "")
 }
 
@@ -61,4 +61,4 @@ module "registry_private_endpoint" {
       private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.servicebus.windows.net"
     }
   }
-}
+}*/
