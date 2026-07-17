@@ -42,11 +42,11 @@ resource "azurerm_eventhub_namespace" "eventhubnamespace" {
 }
 
 module "globals" {
-  source = "git@gitlab.chq.ei:dc-cloudinfra/tf-azure-globals.git?ref=v.01.28.25"
+  source = "module reference"
 }
 
 module "registry_private_endpoint" {
-  source          = "git@gitlab.chq.ei:dc-cloudinfra/tf-azure-private-endpoint.git?ref=v.02.04.25"
+  source          = "module reference"
   count           = var.private_endpoints["subnet_id"] == null ? 0 : 1
   target_resource = azurerm_eventhub_namespace.eventhubnamespace.id
   location        = var.location
@@ -62,7 +62,7 @@ module "registry_private_endpoint" {
   private_dns = {
     namespace = {
       name                 = "privatelink.servicebus.windows.net"
-      private_dns_zone_ids = "${module.globals.private_dns_zone_id_prefix}/privatelink.servicebus.windows.net"
+      private_dns_zone_ids = "privatelink.servicebus.windows.net"
     }
   }
 }*/
