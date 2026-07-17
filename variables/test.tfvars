@@ -3,7 +3,7 @@
 resource_group_name             = "test-rg-st"
 location                        = "westus2"
 sku                             = "Standard"
-azurerm_eventhub_namespace_name = "namespacename"
+azurerm_eventhub_namespace_name = "leeterr"
 capacity                        = 2
 auto_inflate_enabled            = true
 maximum_throughput_units        = 7
