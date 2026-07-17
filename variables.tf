@@ -43,7 +43,7 @@ variable "sku" {
   default     = "Standard"
 }
 
-#private endpoint variables
+/*#private endpoint variables
 
 variable "private_endpoints" {
   default = {
@@ -55,4 +55,4 @@ variable "private_endpoints" {
     subnet_id                 = string
   })
 
-}
+}*/
